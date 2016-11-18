@@ -42,14 +42,14 @@ app.get('/', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-	mongo.find('users', req.query, function(results) {
+	mongo.find('users', req.query, {}, function(results) {
 		res.json(results);
 	})
 })
 
 app.post('/reviews', function(req, res) {
 	console.log("POST");
-	mongo.find('reviews', {"key": req.body.key}, function(results) {
+	mongo.find('reviews', {"key": req.body.key}, {}, function(results) {
 		if (results.toString() == []) {
 			console.log("Chose INSERT");
 			mongo.insert('reviews', req.body);
@@ -63,7 +63,10 @@ app.post('/reviews', function(req, res) {
 
 app.get('/reviews2', function(req, res) {
 	console.log("GET");
-	mongo.find('reviews', req.query, function(results) {
+	console.log(req.query);
+	console.log(req.query.dQuery);
+	console.log(req.query.dProjection);
+	mongo.find('reviews', req.query.dQuery, req.query.dProjection, function(results) {
 		res.json(results);
 	});
 })

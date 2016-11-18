@@ -19,12 +19,12 @@ exports.stop = function() {
 	db.close();
 }
 
-exports.find = function(collname, qry, callback) {
+exports.find = function(collname, qry, proj, callback) {
 	collection = db.collection(collname);
-	collection.find(qry).toArray(function(err, docs) {
+	collection.find(qry, proj).toArray(function(err, docs) {
 	    assert.equal(err, null);
 	    console.log("Found the following records");
-	    //console.log(docs);
+	    console.log(docs);
 	    callback(docs);
 	});
 }
