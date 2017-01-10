@@ -31,8 +31,11 @@ exports.find = function(collname, qry, proj, callback) {
 
 exports.update = function(collname, qry, val) {
 	collection = db.collection(collname);
+	/* Remove the _id field from the posted data because it is only used for the query.
+	 * Including it in the update code would trigger an error because it can't be overwritten.
+	 */
+	delete val._id;
 	collection.updateOne(qry, { $set: val }, function(err1, result) {
-	    //assert.equal(err, null);
 		if (err1 != null) {
 			console.log(err1);
 		} else {

@@ -49,13 +49,14 @@ app.get('/login', function(req, res) {
 
 app.post('/reviews', function(req, res) {
 	console.log("POST");
-	mongo.find('reviews', {"key": req.body.key}, {}, function(results) {
+	mongo.find('reviews', {"_id": req.body._id}, {}, function(results) {
+		console.log("_id: "+req.body._id);
 		if (results.toString() == []) {
 			console.log("Chose INSERT");
 			mongo.insert('reviews', req.body);
 		} else {
 			console.log("Chose UPDATE");
-			mongo.update('reviews', {"key": req.body.key}, req.body);
+			mongo.update('reviews', {"_id": req.body._id}, req.body);
 		}
 	});
 	res.json(req.body);
